@@ -1,0 +1,32 @@
+<!-- Created by Adam Simcoe - 101442161 -->
+<!-- Last Updated - April 4th, 2025 -->
+
+<h2>Login</h2>
+
+<form (ngSubmit)="onLogin()">
+    
+    <!-- Email Field-->
+    <label>Email:</label>
+    <input type="email" name="email" [(ngModel)]="form.email" required #email="ngModel">
+    <div *ngIf="email.invalid && email.touched" class="error">
+        Email is required.
+    </div>
+    <br>
+
+    <!-- Password Field -->
+    <label>Password:</label>
+    <input type="password" name="password" [(ngModel)]="form.password" required #password="ngModel">
+    <div *ngIf="password.invalid && password.touched" class="error">
+        Password is required.
+    </div>
+    <br>
+
+    <!--Error Message Display -->
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+    <!-- Login Button -->
+    <button type="submit">Login</button>
+</form>
+
+<!--SIgnup redirect-->
+<p>Don't have an account? <a routerLink="/signup">Signup</a></p>

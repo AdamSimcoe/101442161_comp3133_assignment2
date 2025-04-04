@@ -1,0 +1,105 @@
+<!-- Created by Adam Simcoe - 101442161 -->
+<!-- Last Updated - April 1st, 2025 -->
+
+ <h2>Add New Employee</h2>
+
+<form (ngSubmit)="onSubmit()" #empForm="ngForm">
+    <!-- First Name Field -->
+    <label>First Name:</label>
+    <input type="text" name="first_name" [(ngModel)]="form.first_name" required #firstName="ngModel">
+    <div *ngIf="firstName.invalid && firstName.touched" class="error">
+        First name is required.
+    </div>
+    <br>
+
+    <!-- Lastt Name Field -->
+    <label>Last Name:</label>
+    <input type="text" name="Last_name" [(ngModel)]="form.last_name" required #lastName="ngModel">
+    <div *ngIf="lastName.invalid && lastName.touched" class="error">
+        Last name is required.
+    </div>
+    <br>
+
+    <!-- Email Field -->
+    <label>Email:</label>
+    <input type="text" name="email" [(ngModel)]="form.email" required #email="ngModel">
+    <div *ngIf="email.invalid && email.touched" class="error">
+        Email is required.
+    </div>
+    <br>
+
+    <!-- Gender Field -->
+    <label>Gender:</label>
+    <select name="gender" [(ngModel)]="form.gender" required #gender="ngModel">
+        <option value="" disabled selected>Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+    </select>
+    <div *ngIf="gender.invalid && gender.touched" class="error">
+        Gender is required.
+    </div>
+    <br>
+
+    <!-- Designation Field -->
+    <label>Designation:</label>
+    <input type="text" name="designation" [(ngModel)]="form.designation" required #designation="ngModel">
+    <div *ngIf="designation.invalid && designation.touched" class="error">
+        Designation is required.
+    </div>
+    <br>
+
+    <!-- Salary Field -->
+    <label>Salary:</label>
+    <input type="number" name="salary" [(ngModel)]="form.salary" required #salary="ngModel">
+    <div *ngIf="salary.invalid && salary.touched" class="error">
+        Salary is required.
+    </div>
+    <br>
+
+    <!-- Department Field -->
+    <label>Department:</label>
+    <input type="text" name="department" [(ngModel)]="form.department" required #department="ngModel">
+    <div *ngIf="department.invalid && department.touched" class="error">
+        Department is required.
+    </div>
+    <br>
+
+    <!-- Date of Joining Field -->
+    <label>Date of Joining:</label>
+    <input type="date" name="date_of_joining" [(ngModel)]="form.date_of_joining" required #dateOfJoining="ngModel">
+    <div *ngIf="dateOfJoining.invalid && dateOfJoining.touched" class="error">
+        Date of Joining is required.
+    </div>
+    <br>
+
+    <!-- Employee Photo Field -->
+    <label>Employee Photo:</label>
+    <select name="employee_photo" [(ngModel)]="form.employee_photo">
+        <option value="">Select a Photo </option>
+        <option *ngFor="let photo of photos" [value]="photo">{{ photo }}</option>
+    </select>
+
+    <!--Employee Photo Preview Display -->
+    <div *ngIf="form.employee_photo" style="margin-top: 10px;">
+        <p>Photo Preview:</p>
+        <img [src]="'http://localhost:5000/assets/employee_photos/' + form.employee_photo"
+            alt="Selected Photo Preview"
+            width="100"
+            height="100"
+            style="border-radius: 8px; border: 1px solid #ccc;" 
+        />
+    </div>
+    <br><br>
+
+    <!-- Error display for invalid form submission -->
+    <div *ngIf="errorMessageList.length > 0" class="error-message">
+        <ul>
+            <li *ngFor="let err of errorMessageList">{{ err }}</li>
+        </ul>
+    </div>
+
+    <!-- Submit & Cancel Buttons -->
+    <button type="submit">Add Employee</button>
+    <button type="button" routerLink="/employees">Cancel</button>
+</form>

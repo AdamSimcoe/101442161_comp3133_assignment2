@@ -1,0 +1,34 @@
+# Created by Adam Simcoe - 101442161
+# Last Updated April 1st, 2025
+# docker-compose -p comp3133-assignment2 up --build -d
+
+version: '3.9'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - '5000:5000'
+    depends_on:
+      - comp3133-mongodb
+    env_file:
+      - .env
+  
+  comp3133-mongodb:
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes: 
+      - mongo-data:/data/db
+  
+  comp3133-mongo-express:
+    image: mongo-express:latest
+    ports: 
+      - '8081:8081'
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=comp3133-mongodb
+  
+volumes:
+  mongo-data:

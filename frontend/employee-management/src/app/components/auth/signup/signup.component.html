@@ -1,0 +1,47 @@
+<!--Created by Adam Simcoe -->
+<!-- Last Updated on April 4th, 2025 -->
+
+
+<h2>signup</h2>
+
+<form (ngSubmit)="onSignup()" #signupForm="ngForm">
+
+    <!-- Username Field -->
+    <label>Username:</label>
+    <input type="text" name="username" [(ngModel)]="form.username" required #username="ngModel">
+    <div *ngIf="username.invalid && username.touched" class="error">
+        Username is required.
+    </div>
+    <br>
+
+
+    <!-- Email Field-->
+    <label>Email:</label>
+    <input type="email" name="email" [(ngModel)]="form.email" required #email="ngModel">
+    <div *ngIf="email.invalid && email.touched" class="error">
+        Email is required.
+    </div>
+    <br>
+
+    <!-- Password Field -->
+    <label>Password:</label>
+    <input type="password" name="password" [(ngModel)]="form.password" required #password="ngModel">
+    <div *ngIf="password.invalid && password.touched" class="error">
+        Password is required.
+    </div>
+    <br>
+
+    <!--Error Message Display -->
+    <div *ngIf="errorMessageList.length > 0" class="error-list">
+        <ul>
+            <li *ngFor="let error of errorMessageList">{{ error }}</li>
+        </ul>
+    </div>
+
+    <!-- Signup Button -->
+    <button type="submit">Signup</button>
+</form>
+
+<p>
+    Already have an account? <a routerLink="/login">Login here</a>
+</p>

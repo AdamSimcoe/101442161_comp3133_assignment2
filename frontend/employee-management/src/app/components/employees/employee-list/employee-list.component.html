@@ -1,0 +1,52 @@
+<!-- Created by Adam Simcoe - 101442161 -->
+<!-- Last Updated - April 1st 2025 -->
+
+<h2>Employee List</h2>
+
+<!-- Logout button -->
+<button (click)="logout()">Logout</button>
+
+<!-- Search Employees by Department/Designation -->
+<div>
+    <input type="text" placeholder="Department" [(ngModel)]="searchDepartment">
+    <input type="text" placeholder="Designation" [(ngModel)]="searchDesignation">
+
+    <button (click)="onSearch()">Search</button>
+    <button (click)="clearSearch()">Clear</button>
+</div>
+
+<!-- Add Employee -->
+<div>
+    <button routerLink="/employees/add">Add Employee</button>
+</div>
+
+<!-- Employee List -->
+<table *ngIf="employees$ | async as employees">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let emp of employees">
+            <td>{{ emp.first_name }}</td>
+            <td>{{ emp.last_name }}</td>
+            <td>{{ emp.department }}</td>
+            <td>{{ emp.designation }}</td>
+            <td>
+                <!-- Button Navigation for specific employee id-->
+                <button [routerLink]="['/employees', emp._id]">Details</button>
+                <button [routerLink]="['/employees/update', emp._id]">Update</button>
+                <button (click)="confirmDelete(emp._id)">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- No employees found display -->
+<p *ngIf="(employees$ | async)?.length === 0">No employees found.</p>
