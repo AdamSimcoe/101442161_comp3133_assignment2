@@ -1,5 +1,6 @@
 # COMP 3133 Assignment 2
 Created by Adam Simcoe - 101442161
+
 Last Updated - April 4th, 2025
 
 ---
@@ -17,9 +18,7 @@ Key features of this app include:
 - Live search and filtering of employee records based off department and/or designation
 - Employee photo previews
 
-
 ---
-
 
 ## How to Setup and Run the App
 
@@ -31,7 +30,14 @@ docker-compose -p comp3133-assignment2 up --build -d
 ```
 
 ### Frontend Setup
-Navigate to frontend/employee-management and run the following command in order to build the angular application:
+Navigate to frontend/employee-management and run the following command in order to install all necessary dependencies:
+
+```bash
+npm install
+```
+
+Then, within the same directory run the following command in order to start the Angular application:
+
 
 ```bash
 ng serve
