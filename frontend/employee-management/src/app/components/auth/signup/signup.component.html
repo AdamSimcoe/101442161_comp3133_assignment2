@@ -33,6 +33,8 @@
 
     <!--Error Message Display -->
     <div *ngIf="errorMessageList.length > 0" class="error-list">
+        <!-- Displays Invalid Fields or Invalid Field based on error list length -->
+        <strong>Invalid Field{{ errorMessageList.length > 1 ? 's' : '' }}</strong>
         <ul>
             <li *ngFor="let error of errorMessageList">{{ error }}</li>
         </ul>

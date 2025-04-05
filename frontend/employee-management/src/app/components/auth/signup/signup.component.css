@@ -1,0 +1,133 @@
+/* Created by Adam Simcoe - 101442161
+   Last Updated - April 4th, 2025 */
+
+/* Background container */
+:host {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #007bff;
+}
+
+/* Signup container */
+form {
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    border: 2px solid #003366;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    text-align: center;
+}
+
+/* Page title */
+h2 {
+    margin-bottom: 15px;
+    color: white;
+    font-weight: bold;
+}
+
+/* Form field labels */
+label {
+    font-weight: bold;
+}
+
+/* Form field inputs */
+input[type="text"],
+input[type="email"], 
+input[type="password"] {
+    width: 100%;
+    padding: 8px 10px;
+    margin: 5px 0 12px 0;
+    border: 1px solid black;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* Input field styling when touched or invalid */
+input.ng-touched.ng-invalid {
+    border: 1px solid red;
+}
+
+/* Touched and invalid input error display */
+.error {
+    color: red;
+    font-size: 13px;
+    margin-bottom: 10px;
+    border: 1px solid red;
+    background-color: #ffe6e6;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+/* Error list container */
+.error-list {
+    border: 2px solid #8B0000;
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #cc0000;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+/* Error list title */
+.error-list strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+    text-align: center;
+    color: #b30000;
+}
+
+/* Error list ul */
+.error-list ul {
+    padding-left: 20px;
+    margin: 0;
+}
+
+/* Error list li */
+.error-list li {
+    list-style-type: disc;
+    margin-bottom: 5px;
+}
+
+/* Submit button */
+button[type="submit"] {
+    background-color: gold;
+    border: none;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* Submit button hover */
+button[type="submit"]:hover {
+    background-color: #e6b800;
+}
+
+/* Login redirect message */
+p {
+    margin-top: 20px;
+    font-size: 18px;
+    color: white;
+}
+
+/* Login redirect link */
+a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Login redirect link hover */
+a:hover {
+    text-decoration: underline;
+}
