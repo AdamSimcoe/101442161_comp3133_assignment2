@@ -63,3 +63,54 @@ Sample user data has been provided already in the database for easy testing and 
 
 **Email:** `test1@example.com`
 **Password:** `password123`
+
+### Application Screenshots
+Below is a visual overview of the application's UI design.
+
+## Signup Page
+![Signup Page](screenshots/signup.jpg)
+
+---
+
+## Login Page
+![Login Page](screenshots/login.jpg)
+
+---
+
+## Employee List Page
+![Employee List Page](screenshots/employee%20list%20.jpg)
+
+---
+
+## Employee List Search
+![Employee List Search](screenshots/employee%20list%20search.jpg)
+
+---
+
+![Employee List Search - no Results](screenshots/employee%20list%20search%20missing.jpg)
+
+---
+
+## Employee Details Page
+![Employee Details Page](screenshots/employee%20details%20.jpg)
+
+---
+
+![Employee Details page loading](screenshots/employee%20details%20loading.jpg)
+
+---
+
+## Add Employee Form
+![Add Employee Form](screenshots/add%20employee.jpg)
+
+---
+
+## Update Employee Form
+![Update Employee Form](screenshots/update%20employee%20.jpg)
+
+---
+
+## Form Error Handling
+![Form Error Handling Example](screenshots/error%20validation.jpg)
+
+---
