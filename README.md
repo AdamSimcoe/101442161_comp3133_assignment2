@@ -39,7 +39,7 @@ docker-compose -p comp3133-assignment2 up --build -d
 ```
 --- 
 
-### Viewing the Application
+## Viewing the Application
 In order to view the application in your browser of choice, please navigate to the following url:
 
 **URL:** `http://localhost:4200/`
@@ -50,7 +50,7 @@ Sample user data has been provided already in the database for easy testing and 
 **Email:** `test1@example.com`
 **Password:** `password123`
 
-### Application Screenshots
+## Application Screenshots
 Below is a visual overview of the application's UI design.
 
 ## Signup Page
