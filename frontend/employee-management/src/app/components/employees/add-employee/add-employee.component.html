@@ -1,7 +1,7 @@
 <!-- Created by Adam Simcoe - 101442161 -->
 <!-- Last Updated - April 1st, 2025 -->
 
- <h2>Add New Employee</h2>
+<h2>Add New Employee</h2>
 
 <form (ngSubmit)="onSubmit()" #empForm="ngForm">
     <!-- First Name Field -->
@@ -94,6 +94,8 @@
 
     <!-- Error display for invalid form submission -->
     <div *ngIf="errorMessageList.length > 0" class="error-message">
+        <!-- Displays Invalid Fields or Invalid Field based on error list length -->
+        <strong>Invalid Field{{ errorMessageList.length > 1 ? 's' : '' }}</strong>
         <ul>
             <li *ngFor="let err of errorMessageList">{{ err }}</li>
         </ul>
