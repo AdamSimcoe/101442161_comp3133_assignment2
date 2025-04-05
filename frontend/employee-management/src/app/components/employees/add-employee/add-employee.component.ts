@@ -98,7 +98,12 @@ export class AddEmployeeComponent implements OnInit {
         const validationErrors = gqlError?.extensions?.validationErrors;
         
         // Extract any network Error
-        const networkError = err?.networkError?.result?.errors?.[0]?.message || err?.networkError?.message;
+        let networkError = err?.networkError?.result?.errors?.[0]?.message || err?.networkError?.message;
+        
+        // Generic server message in event backend unreachable
+        if (networkError === 'Failed to fetch') {
+          networkError = 'Unable to connect to server. Please try again later.';
+        }
 
         // Display validation errors if present, otherwise default to GraphQL or network error
         this.errorMessageList = Array.isArray(validationErrors)

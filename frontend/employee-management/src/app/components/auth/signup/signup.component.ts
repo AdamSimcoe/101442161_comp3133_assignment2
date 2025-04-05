@@ -58,11 +58,19 @@ export class SignupComponent {
         // Extract validation errors from backend
         const validationErrors = gqlError?.extensions?.validationErrors;
 
+        // Extract any network Error
+        let networkError = err?.networkError?.result?.errors?.[0]?.message || err?.networkError?.message;
+        
+        // Generic server message in event backend unreachable
+        if (networkError === 'Failed to fetch') {
+          networkError = 'Unable to connect to server. Please try again later.';
+        }
+
         // If validation errors are an array, print the list of errors
-        // If not, use GraphQL error or the generic message
+        // If not, use GraphQL error, network error, or the generic message
         this.errorMessageList = Array.isArray(validationErrors)
           ? validationErrors
-          : [gqlError?.message || 'Signup failed. Please try again.'];
+          : [gqlError?.message || networkError || 'Signup failed. Please try again.'];
       }
     });
   }

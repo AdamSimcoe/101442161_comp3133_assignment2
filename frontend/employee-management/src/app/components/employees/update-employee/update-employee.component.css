@@ -12,6 +12,16 @@
     min-height: 100vh;
 }
 
+/* Loading container */
+.loading-container {
+    background-color: white;
+    padding: 20px 30px;
+    border: 2px solid #003366;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
 /* form container */
 form {
     background-color: white;

@@ -3,7 +3,14 @@
 
 <h2>Update Employee</h2>
 
-<form (ngSubmit)="onSubmit()" #empForm="ngForm">
+<!--Display for if employee information is missing/not yet loaded-->
+<div *ngIf="isLoading" class="loading-container">
+    <p>Loading Employee Form Details..</p>
+    <!--Redirect back to employee list-->
+    <button type="submit" routerLink="/employees">Back to Employee List</button>
+</div>
+
+<form *ngIf="!isLoading" (ngSubmit)="onSubmit()" #empForm="ngForm">
     <!-- First Name Field -->
     <label>First Name:</label>
     <input type="text" name="first_name" [(ngModel)]="form.first_name" required #firstName="ngModel">
@@ -12,7 +19,7 @@
     </div>
     <br>
 
-    <!-- Lastt Name Field -->
+    <!-- Last Name Field -->
     <label>Last Name:</label>
     <input type="text" name="Last_name" [(ngModel)]="form.last_name" required #lastName="ngModel">
     <div *ngIf="lastName.invalid && lastName.touched" class="error">

@@ -3,7 +3,7 @@
 
 // Imports
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { GET_EMPLOYEE_BY_ID, UPDATE_EMPLOYEE } from './update-employee.graphql';
@@ -19,7 +19,7 @@ import { Apollo } from 'apollo-angular';
   styleUrl: './update-employee.component.css'
 })
 
-export class UpdateEmployeeComponent implements OnInit {
+export class UpdateEmployeeComponent implements OnInit, OnDestroy {
   // Dependency Injection
   private http = inject(HttpClient);
   private apollo = inject(Apollo);
@@ -34,6 +34,15 @@ export class UpdateEmployeeComponent implements OnInit {
 
   // Initialize error message list
   errorMessageList: string[] = [];
+
+  // Set boolean to track if employee data is loaded
+  isLoading = true;
+
+  // Initialize timeout id
+  timeoutId: any = null;
+
+  //Initialize retry interval
+  retryInterval: any = null;
 
   // Initialize form
   form: any = {
@@ -53,29 +62,63 @@ export class UpdateEmployeeComponent implements OnInit {
     // Set employee id using route param
     this.employeeId = this.route.snapshot.paramMap.get('id') || '';
 
+    // Initialize query retry counter;
+    let retries = 0;
+
+    // Timeout redirect for if employee data can not be fetched within 15 seconds
+    this.timeoutId = setTimeout(() => {
+      if (!this.form.first_name) {
+        alert('Employee data could not be loaded in time. Redirecting to employee list.');
+        this.router.navigate(['/employees']);
+      }
+    }, 15000);
+
     // Get all employee photos from backend
     this.http.get<string[]>('http://localhost:5000/api/photos').subscribe(photoList => {
       this.photos = photoList;
 
-      // Run GraphQL query to get all employee details using ID
-      this.apollo.watchQuery<any>({
-        query: GET_EMPLOYEE_BY_ID,
-        variables: { eid: this.employeeId }
-      }).valueChanges.subscribe(result => {
-        // Set employee data from query  
-        const employee = result.data.getEmployeeById;
+      // Set retry interval to continue attempting query
+      this.retryInterval = setInterval(() => {
+        // Run GraphQL query to get all employee details using ID
+        this.apollo.watchQuery<any>({
+          query: GET_EMPLOYEE_BY_ID,
+          variables: { eid: this.employeeId },
+          fetchPolicy: 'network-only'
+        }).valueChanges.subscribe({
+          next: (result) => {
+            // Set employee data from query  
+            const employee = result.data.getEmployeeById;
 
-        // Extract photo file name from image url
-        const photoUrl = employee.employee_photo || '';
-        const fileName = photoUrl ? photoUrl.split('/').pop() : '';
+            if (employee) {
+              // Extract photo file name from image url
+              const photoUrl = employee.employee_photo || '';
+              const fileName = photoUrl ? photoUrl.split('/').pop() : '';
 
-        // Pre-populate form with employee's original data
-        this.form = { 
-          ...employee,
-          employee_photo: fileName 
-        };
-      });
+              // Pre-populate form with employee's original data
+              this.form = { 
+                ...employee,
+                employee_photo: fileName 
+              };
+              // Hide loading display
+              this.isLoading = false;
+
+              // Clear timeout and retry interval if data fetched
+              clearTimeout(this.timeoutId);
+              clearInterval(this.retryInterval);
+            }
+          }
+        });
+      // Retry query every 1s
+      }, 1000);
     });
+  }
+
+   // Clear timeout if user leaves before automatic redirect
+   ngOnDestroy(): void {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+      clearInterval(this.retryInterval);
+    }
   }
 
   // Submit form method
@@ -118,8 +161,13 @@ export class UpdateEmployeeComponent implements OnInit {
         // Extract validation errors
         const validationErrors = gqlError?.extensions?.validationErrors;
 
-        // Extract any network error
-        const networkError = err?.networkError?.result?.errors?.[0]?.message || err?.networkError?.message;
+        // Extract any network Error
+        let networkError = err?.networkError?.result?.errors?.[0]?.message || err?.networkError?.message;
+        
+        // Generic server message in event backend unreachable
+        if (networkError === 'Failed to fetch') {
+          networkError = 'Unable to connect to server. Please try again later.';
+        }
 
         // Set error message list with validation errors if present, otherwise default to GraphQL or network error
         this.errorMessageList = Array.isArray(validationErrors)

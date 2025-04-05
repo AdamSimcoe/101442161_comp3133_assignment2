@@ -3,10 +3,9 @@
 
 // Imports
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Apollo } from 'apollo-angular';
-import { map } from 'rxjs';
 import { GET_EMPLOYEE_BY_ID } from './employee-details.graphql';
 import { DELETE_EMPLOYEE } from '../employee-list/employee-list.graphql';
 
@@ -19,13 +18,19 @@ import { DELETE_EMPLOYEE } from '../employee-list/employee-list.graphql';
   styleUrl: './employee-details.component.css'
 })
 
-export class EmployeeDetailsComponent implements OnInit {
+export class EmployeeDetailsComponent implements OnInit, OnDestroy {
   
   // Initialize employee data 
   employee: any = null;
 
   // Set boolean to track if employee data is loaded
   isLoading = true;
+
+  // Initialize timeout id
+  private timeoutId: any;
+
+  // Initialize retry interval
+  private retryInterval: any;
 
   // Constructor injection
   constructor(private route: ActivatedRoute, private router: Router, private apollo: Apollo) {}
@@ -35,21 +40,46 @@ export class EmployeeDetailsComponent implements OnInit {
     // Extract employee ID from route
     const id = this.route.snapshot.paramMap.get('id');
 
+    // Timeout redirect for if employee data can not be fetched within 15 seconds
+    this.timeoutId = setTimeout(() => {
+      if (!this.employee) {
+        alert('Employee data could not be loaded in time. Redirecting to Employee List page.');
+        this.router.navigate(['/employees']);
+      }
+    }, 15000);
+
     // If id present
     if (id) {
-      // GraphQL query to fetch all employee data for that ID
-      this.apollo.watchQuery<any>({
-        query: GET_EMPLOYEE_BY_ID,
-        variables: { eid: id }
-      }).valueChanges.pipe(
-        // Extract employee data
-        map(result => result.data.getEmployeeById)
-      ).subscribe(employee => {
-        // Assign employee data 
-        this.employee = employee;
-        // Hide loading display
-        this.isLoading = false;
-      });
+      // Set retry interval to continue attempting query
+      this.retryInterval = setInterval(() => {
+        this.apollo.watchQuery<any>({
+          query: GET_EMPLOYEE_BY_ID,
+          variables: { eid: id },            
+          fetchPolicy: 'network-only'
+        }).valueChanges.subscribe({
+          next: (result) => {
+            // Extract employee data
+            const employee = result.data.getEmployeeById;
+            
+            // If employee data successfully extracted, set employee data and clear timeout/interval
+            if (employee) {
+              this.employee = employee;
+              this.isLoading = false;
+              clearTimeout(this.timeoutId);
+              clearInterval(this.retryInterval);
+            }
+          }
+        });
+      // Retry query every 1s
+      }, 1000);
+    }
+  }
+
+  // Clear timeout and retry interval if user leaves before automatic redirect
+  ngOnDestroy(): void {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId)
+      clearInterval(this.retryInterval);
     }
   }
 

@@ -50,8 +50,17 @@ export class LoginComponent {
       },
       // Failed login
       error: (err) => {
+
+        // Extract any network Error
+        let networkError = err?.networkError?.result?.errors?.[0]?.message || err?.networkError?.message;
+        
+        // Generic server message in event backend unreachable
+        if (networkError === 'Failed to fetch') {
+          networkError = 'Unable to connect to server. Please try again later.';
+        }
+
         // Set error message and display to user
-        this.errorMessage = err?.message || 'Login failed. Please try again.';
+        this.errorMessage = err?.message || networkError || 'Login failed. Please try again.';
       }
     });
   }

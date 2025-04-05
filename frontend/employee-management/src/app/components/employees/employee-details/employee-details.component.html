@@ -4,37 +4,46 @@
 <h2>Employee Details</h2>
 
 <!--Display for if employee information is missing/not yet loaded-->
-<div *ngIf="isLoading">
-    <p>Loading employee data...</p>
+<div *ngIf="isLoading" class="loading-container">
+    <p>Loading Employee Details..</p>
     <!--Redirect back to employee list-->
-    <button routerLink="/employees">Back to Employee List</button>
+    <button routerLink="/employees" class="redirect">Back to Employee List</button>
 </div>
 
 <!-- Employee Details Container -->
-<div *ngIf="!isLoading && employee">
+<div *ngIf="!isLoading && employee" class="employee-container">
+    <div class="employee-content">
+
+        <div class="photo-wrapper">
+        <!-- Employee Photo Display -->
+        <img [src]="employee.employee_photo" alt="Employee Photo" class="employee-photo" />
+        </div>
+
+        <div class="info-wrapper">
+            <!-- Employee Details List -->
+            <ul class="employee-info">
+                <li><strong>ID:</strong> {{ employee._id }}</li>
+                <li><strong>First Name:</strong> {{ employee.first_name }}</li>
+                <li><strong>Last Name:</strong> {{ employee.last_name }}</li>
+                <li><strong>Gender:</strong> {{ employee.gender }}</li>
+                <li><strong>Email:</strong> {{ employee.email }}</li>
+                <li><strong>Department:</strong> {{ employee.department }}</li>
+                <li><strong>Designation:</strong> {{ employee.designation }}</li>
+                <li><strong>Salary:</strong> ${{ employee.salary }}</li>
+                <li><strong>Date of Joining:</strong> {{ employee.date_of_joining }}</li>
+                <li><strong>Created At:</strong> {{ employee.created_at | date: 'yyyy-MM-dd HH:mm:ss' }}</li>
+                <li><strong>Updated At:</strong> {{ employee.updated_at | date: 'yyyy-MM-dd HH:mm:ss' }}</li>
+            </ul>
+        </div>
     
-    <!-- Employee Photo Display -->
-    <img [src]="employee.employee_photo" alt="Employee Photo" width="120" />
 
-    <!-- Employee Details List -->
-    <ul>
-        <li><strong>ID:</strong> {{ employee._id }}</li>
-        <li><strong>First Name:</strong> {{ employee.first_name }}</li>
-        <li><strong>Last Name:</strong> {{ employee.last_name }}</li>
-        <li><strong>Gender:</strong> {{ employee.gender }}</li>
-        <li><strong>Email:</strong> {{ employee.email }}</li>
-        <li><strong>Department:</strong> {{ employee.department }}</li>
-        <li><strong>Designation:</strong> {{ employee.designation }}</li>
-        <li><strong>Salary:</strong> ${{ employee.salary }}</li>
-        <li><strong>Date of Joining:</strong> {{ employee.date_of_joining }}</li>
-        <li><strong>Created At:</strong> {{ employee.created_at | date: 'yyyy-MM-dd HH:mm:ss' }}</li>
-        <li><strong>Updated At:</strong> {{ employee.updated_at | date: 'yyyy-MM-dd HH:mm:ss' }}</li>
-    </ul>
-
-    <!-- Navigation buttons -->
-    <div>
-        <button routerLink="/employees">Back to Employees List</button>
-        <button [routerLink]="['/employees/update', employee._id]">Update Employee</button>
-        <button (click) ="confirmDelete()">Delete Employee</button>
+        <div class="button-wrapper">
+            <!-- Navigation buttons -->
+            <div class="button-group">
+                <button routerLink="/employees" class="redirect">Back to Employees List</button>
+                <button [routerLink]="['/employees/update', employee._id]" class="update">Update Employee</button>
+                <button (click) ="confirmDelete()" class="delete">Delete Employee</button>
+            </div>
+        </div>
     </div>
 </div>

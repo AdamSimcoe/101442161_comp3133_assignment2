@@ -1,0 +1,197 @@
+/* Created by Adam Simcoe - 101442161 
+   Last Updated - April 5th, 2025 */
+
+/* Background container */
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #007bff; /* Blue page background */
+    min-height: 100vh;
+    padding: 30px 20px;
+}
+  
+/* Page title */
+h2 {
+    color: white;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 25px;
+}
+
+/* Logout container */
+.logout-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+/* Logout button */
+.logout {
+    background-color: gold;
+    border: none;
+    padding: 8px 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Logout button hover */
+.logout:hover {
+    background-color: #e6b800;
+}
+
+/* Employee list container */
+.employee-container {
+    background-color: white;
+    border: 2px solid #003366;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 1000px;
+    margin-bottom: 30px;
+}
+
+/* Search bar */
+.search-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+/* Search bar input */
+.search-bar input {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* Search buttons */
+.search-bar button {
+    padding: 8px 16px;
+    font-weight: bold;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Search button */
+.search {
+background-color: gold;
+}
+
+/* Search button hover */
+.search:hover {
+background-color: #e6b800;
+}
+
+/* Clear button */
+.clear {
+background-color: #6c757d;
+color: white;
+}
+
+/* Clear button hover */
+.clear:hover {
+background-color: #5a6268;
+}
+
+/* Add new employee button */
+.add {
+background-color: gold;
+border: none;
+padding: 10px 20px;
+font-weight: bold;
+border-radius: 4px;
+margin-top: 20px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+/* Add mew employee button hover */
+.add:hover {
+    background-color: #e6b800;
+}
+
+/* Employee list table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #003366;
+    margin-top: 10px;
+}
+
+/* Employee list td */
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+}
+
+/* Employee list th */
+th {
+    background-color: rgba(0, 123, 255, 0.1);
+    color: #003366;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #003366;
+    font-weight: bold;
+}
+
+/* Employee action buttons */
+.action-buttons button {
+    margin-right: 8px;
+    padding: 6px 12px;
+    font-size: 15px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Employee details button */
+.details {
+    background-color: green; 
+}
+
+/* Employee details button hover */
+.details:hover {
+    background-color: darkgreen;
+}
+
+/* Employee update button */
+.update {
+    background-color: orange;
+}
+
+/* Employee update button hover */
+.update:hover {
+    background-color: #e69500;
+}
+
+/* Employee delete button */
+.delete {
+    background-color: crimson;
+}
+
+/* Employee delete button hover */
+.delete:hover {
+    background-color: darkred;
+}
+
+/* Missing employee list container */
+.missing-employees {
+    text-align: center;
+    padding: 20px;
+    margin-top: 15px;
+}
